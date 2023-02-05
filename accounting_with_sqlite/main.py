@@ -4,33 +4,40 @@ import time
 # Connect or Create Database
 db = sqlite3.connect("accounting.db")
 
+
 def create_table():
     # Create Table
     db.execute('CREATE TABLE IF NOT EXISTS persons(name, surname, debt)')
+
 
 def insert_person(name, surname, debt):
     # Insert person
     db.execute(f'INSERT INTO persons VALUES("{name}","{surname}", {debt})')
     db.commit()
 
+
 def delete_person(name, surname):
     # Delete person
-    db.execute(f'DELETE FROM persons WHERE name =  "{name}" and surname = "{surname}"')
+    db.execute(f'DELETE FROM persons WHERE name="{name.upper()}" and surname = "{surname.upper()}"')
     db.commit()
+
 
 def show_persons():
     data = db.execute('SELECT * FROM persons')
     for name, surname, debt in data.fetchall():
         print(f"--------------\nName: {name} {surname}\nDebt: {debt}\n--------------")
 
+
 def take_info():
     name = input("Enter a name: ")
     surname = input("Enter a surname: ")
     return name, surname
 
+
 def update_person(name, surname, debt):
     db.execute(f"UPDATE persons SET debt = {debt} where name = {name} and surname = {surname}")
     db.commit()
+
 
 def control_with_debt(name, surname, debt):
     if (name != "" and surname != "" and debt != ""):
@@ -38,18 +45,22 @@ def control_with_debt(name, surname, debt):
     else:
         return False
 
+
 def control(name, surname):
     if (name != "" and surname != ""):
         return True
     else:
         return False
+
+
 def is_person_exists(name, surname):
     data = db.execute('SELECT * FROM persons')
     for db_name, db_surname, debt in data:
-        if(db_name != name.upper() and db_surname != surname.upper()):
+        if (db_name != name.upper() and db_surname != surname.upper()):
             return False
         else:
             return True
+
 
 create_table()
 while True:
@@ -94,5 +105,3 @@ while True:
             print("\n---Person has updated.---\n")
         else:
             print("\n!!! Invalid process. Try Again...\n")
-
-
