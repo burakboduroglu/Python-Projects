@@ -4,7 +4,6 @@
 
 ### Python Projects
 
-- NumPy/Pandas/Matplotlib projects
 - Requests/BeautifulSoup projects
 - Tkinter projects
 - Pytube projects
